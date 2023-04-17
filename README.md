@@ -1,27 +1,17 @@
-# 关于本项目
-在termux-x11里流畅运行KDE Plasma 5.26
-![](https://ghproxy.com/github.com/kde-yyds/termux-x11-plasma-installer/raw/master/1.jpg)
-FPS稳定60帧  
-因为KDE Plasma跑在archlinux里  
-但kwin是另一个debian11的老kwin  
-还保留了xrender混成器后端  
-所以软件渲染仍然十分丝滑流畅
-# changelog
-2023/2/12 更新了LD_PRELOAD环境变量清空方法，修复了老版本安卓无法启动proot的问题  
-若之前已经安装了，可以用这个指令修复
-```
-sed -i 's/env LD_PRELOAD=/env -u LD_PRELOAD/g' /data/data/com.termux/files/home/containers/scripts/*
-```
-# 使用教程
-## 安装termux和termux-x11
-termux：<https://ghproxy.com/github.com/termux/termux-app/releases/download/v0.118.0/termux-app_v0.118.0+github-debug_arm64-v8a.apk>  
-termux-x11：<https://ghproxy.com/github.com/kde-yyds/termux-x11-plasma-installer/raw/master/termux-x11.apk>
-## 其他
-1.建议把手机的屏幕分辨率调低，保证软件渲染流畅不掉帧  
-2.打开termux-x11,通知栏里按Preferences,把Show additional keyboard勾去掉
-## 安装
-进入termux  
-运行
+First we need to install X11-repo, execute following to install it
+`pkg update ; pkg install x11-repo`
+after we need to install Wayland
+`pkg install xwayland`
+then download this repo and install termux-x11 package
+`dpkg -i --force-depends termux-x11.deb`
+then install install termux-x11.apk file and open it
+Set bigger resolution for better fps
+*Open Termux:X11 app ,go to Preferences,and disable "Show additional keyboard"
+run this command one time in termux to allow external apps to interact with termux
+`
+value="true"; key="allow-external-apps"; file="/data/data/com.termux/files/home/.termux/termux.properties"; mkdir -p "$(dirname "$file")"; chmod 700 "$(dirname "$file")"; if ! grep -E '^'"$key"'=.*' $file &>/dev/null; then [[ -s "$file" && ! -z "$(tail -c 1 "$file")" ]] && newline=$'\n' || newline=""; echo "$newline$key=$value" >> "$file"; else sed -i'' -E 's/^'"$key"'=.*/'"$key=$value"'/' $file; fi
+`
+install Plasma from github
 ```
 apt update
 apt install aria2 -y
@@ -29,6 +19,19 @@ aria2c https://ghproxy.com/github.com/kde-yyds/termux-x11-plasma-installer/raw/m
 chmod +x install.sh
 ./install.sh
 ```
+Waaaaaait a little bit....more)
+then you can start it
+start the Wayland with 
+`termux-x11:1`
+open new session from the left side of termux and start Plasma with
+`DISPLAY=:1 plasma`
+Open Termux:X11 app
+TADAAA
+# About the project
+Easy install and run with termux-x11 the KDE Plasma 5.26
+![](https://ghproxy.com/github.com/kde-yyds/termux-x11-plasma-installer/raw/master/1.jpg)
+Stable 60 FPS  
+# Install and Launch
 
-注：若安装过程被打断，重新运行即可，支持从中断的地方继续安装
+If the installation has been stopped for some reason run again ./install.sh to intall from where it stopped
 ![](https://ghproxy.com/github.com/kde-yyds/termux-x11-plasma-installer/raw/master/2.jpg)
