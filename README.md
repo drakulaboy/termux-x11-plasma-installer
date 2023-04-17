@@ -22,6 +22,8 @@ chmod +x install.sh
 Waaaaaait a little bit....more)
 if you want english language run in termux
 `sed -i 's/zh_CN/en_US/g' /data/data/com.termux/files/home/containers/scripts/archlinuxarm_plasma.sh`
+and
+`sed -i 's/zh_CN/en_US/g' /data/data/com.termux/files/home/containers/scripts/debianbullseye_xrenderkwin_xfce4-panel.sh`
 then you can start it
 start the Wayland with 
 `termux-x11:1`
